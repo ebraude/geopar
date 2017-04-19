@@ -32,7 +32,7 @@ class TFPreprocessor(object):
         """
 
         for triangle in a_tf.get_triangles():
-            if triangle.count_known() == 2:
+            if triangle.number_of_known() == 2:
                 triangle.complete_unknown_angle()
 
     @staticmethod
