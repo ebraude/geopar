@@ -1,6 +1,6 @@
 from geopar.angle_class import Angle
 
-__author__ = 'mostly satbek'
+__author__ = 'mostly satbek'  # edits by eric braude
 
 
 class TriangulatedFigure:
