@@ -2,7 +2,6 @@ import unittest
 from geopar.tfvalidator import TFValidator
 from geopar.triangulated_figure_class import TriangulatedFigure
 from geopar.triangle_class import Triangle
-from geopar.utilities import EmptyException
 
 __author__ = 'satbek'
 
@@ -45,14 +44,8 @@ class TestTFValidator(unittest.TestCase):
     def test_rule_180(self):
         self.assertTrue(self.validator.rule_180(self.tf1))
 
-        with self.assertRaises(EmptyException):
-            self.validator.rule_180(self.tf_empty)
-
     def test_rule_360(self):
         self.assertTrue(self.validator.rule_360(self.tf1))
-
-        with self.assertRaises(EmptyException):
-            self.validator.rule_360(self.tf_empty)
 
     def test_rule_pairing(self):
         self.assertTrue(self.validator.rule_pairing(self.tf1))
