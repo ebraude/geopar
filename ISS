@@ -1,0 +1,8 @@
+ISSUES
+1. The program does not run from terminal when downloaded or cloned by someone.
+
+SUGGESTIONS
+1. Angle constraints/relationships. G.e. a+b+c+d=240;
+
+SPRINTS
+1. [IMPLEMENTED] Make it work with fractions
