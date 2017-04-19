@@ -1,7 +1,6 @@
 #### Intent
 This project is an example of Computational Reasoning. It acts as a geometric theorems
 prover. More specifically, it is designed to prove Morley's Trisector Theorem (as of June, 2016).
-test line
 
 #### To Run the Program
 Execute `run.py` script.
