@@ -36,6 +36,23 @@ class Triangle:
 
         self.points, self.angles = three_points, temp_3_angles
 
+    def __hash__(self):
+        # Returns hash of self based on contents of self.angles
+
+        sorted_points = sorted(self.points)
+        for_hash = str(sorted_points[0]) + str(hash(self.angle_of_point(sorted_points[0])))
+        for_hash += str(sorted_points[1]) + str(hash(self.angle_of_point(sorted_points[1])))
+        for_hash += str(sorted_points[2]) + str(hash(self.angle_of_point(sorted_points[2])))
+        return hash(for_hash)
+
+    def __str__(self):
+        # Returns: string representation of self.
+
+        return_string = 'TRIANGLE -> Vertices: {}, {}, {}; Angles: {}, {}, {}'.format(
+            self.get_points()[0], self.get_points()[1], self.get_points()[2],
+            self.get_angles()[0], self.get_angles()[1], self.get_angles()[2])
+        return return_string
+
     def angle_of_point(self, a_point):
         # Precondition: a_point is in self.points
         # Returns: the element of self.angles corresponding to a_point
@@ -64,10 +81,6 @@ class Triangle:
             if not self.angles[i].is_known():
                 self.angles[i] = third
 
-    def get_angles(self):
-
-        return self.angles
-
     def get_angle_points_by_point(self, a_point):
         # Returns: the clockwise elts. of self.points for the angle at a_point
 
@@ -76,33 +89,28 @@ class Triangle:
         points = self.points[shift:] + self.points[:shift]
         return points
 
+    def get_angles(self):
+
+        return self.angles
+
     def get_points(self):
 
         return self.points
-
-    def has_point(self, a_point):
-        # Returns: whether or not a_point is in self.points
-
-        return a_point in self.points
 
     def has_all_points(self, three_points):
         # Returns: whether or not self.points is the same set as three_points
 
         return set(self.points) == set(three_points)
 
+    def has_point(self, a_point):
+        # Returns: whether or not a_point is in self.points
+
+        return a_point in self.points
+
     def has_unknown_angle(self):
         # Returns: whether or not is_known() is True for any element of self.angles
 
         return self.number_of_known() != 3
-
-    def __hash__(self):
-        # Returns hash of self based on contents of self.angles
-
-        sorted_points = sorted(self.points)
-        for_hash = str(sorted_points[0]) + str(hash(self.angle_of_point(sorted_points[0])))
-        for_hash += str(sorted_points[1]) + str(hash(self.angle_of_point(sorted_points[1])))
-        for_hash += str(sorted_points[2]) + str(hash(self.angle_of_point(sorted_points[2])))
-        return hash(for_hash)
 
     def index_of_point(self, a_point):
         """
@@ -156,14 +164,6 @@ class Triangle:
         if a_point not in self.points:
             raise Exception('There is no such point for this Triangle.')
         self.angles[self.index_of_point(a_point)] = an_angle
-
-    def __str__(self):
-        # Returns: string representation of self.
-
-        return_string = 'TRIANGLE -> Vertices: {}, {}, {}; Angles: {}, {}, {}'.format(
-            self.get_points()[0], self.get_points()[1], self.get_points()[2],
-            self.get_angles()[0], self.get_angles()[1], self.get_angles()[2])
-        return return_string
 
     def sum_of_known_angles(self):
         # Returns: sum of self.angles elements satisfying is_known()
