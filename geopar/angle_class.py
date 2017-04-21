@@ -273,16 +273,6 @@ class Angle:
             list(map(lambda x: x / to_fraction(a_number), self.coefficients))
         return Angle(returned_coefficients)
 
-    def get_coefficients(self):
-        return self.coefficients
-
-    def get_dimension(self):
-        # Example if self is aα + aβ + c, 3 is returned
-        return len(self.coefficients)
-
-    def is_known(self):
-        return bool(self.get_coefficients())
-
     @classmethod
     def from_str(cls, a_string):
         """
@@ -311,3 +301,13 @@ class Angle:
                 fraction_coefficients.append(Fraction(Decimal(coefficient)))
 
         return Angle(fraction_coefficients)
+
+    def get_coefficients(self):
+        return self.coefficients
+
+    def get_dimension(self):
+        # Example if self is aα + aβ + c, 3 is returned
+        return len(self.coefficients)
+
+    def is_known(self):
+        return bool(self.get_coefficients())
