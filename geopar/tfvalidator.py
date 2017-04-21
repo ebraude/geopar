@@ -13,6 +13,10 @@ class TFValidator(object):
     """
 
     @staticmethod
+    def all_rules(a_tf):
+        return TFValidator.rule_180(a_tf) and TFValidator.rule_360(a_tf) and TFValidator.rule_pairing(a_tf)
+
+    @staticmethod
     def rule_180(a_tf):
         """
         INTENT
@@ -144,6 +148,3 @@ class TFValidator(object):
 
         return True
 
-    @staticmethod
-    def all_rules(a_tf):
-        return TFValidator.rule_180(a_tf) and TFValidator.rule_360(a_tf) and TFValidator.rule_pairing(a_tf)
