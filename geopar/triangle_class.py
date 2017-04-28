@@ -6,14 +6,14 @@ __author__ = 'satbek'  # modified by Eric Braude
 class Triangle:
     """
     Intent: Triangle with 3 angles and 3 vertices (also called 'points')
-    Example:  points[0] *-----* points[1]
+              points[0] *-----* points[1] angles[1]
                          \  /
-              angles[2]   * points[2]
+                angles[2] * points[2]
 
     Class invariants:
     1. self.points consists of 3 distinct non-negative int instances
-    2. self.angles[i] corresponds to self.points[i]  for i in [0, 2]
-    3. self.points is in clockwise order geometrically
+    2. self.points is in clockwise order geometrically
+    3. self.angles[i] corresponds to self.points[i]  for i in [0, 2]
     """
 
     def __init__(self, three_points, three_angles):
@@ -159,9 +159,8 @@ class Triangle:
     def set_angle_by_point(self, a_point, an_angle):
         # Precondition: a_point is in self.points
         # Postcondition: an_angle is the element of self.angles corresponding to a_point
-        # Example: self is 33[angle 50], 44[angle 60], 55[angle 70] and index_of_a_point[44] =  2
-        #          After set_angle_by_point(self, 44, an_angle), an_angle = self.angles[2]
-        # Known issue: change to return the angle?
+        # Example: set_angle_by_point(self, 44, 70) with self.points = [.., 44, ..]
+        # results in self.angles = [.., 70, ..]
 
         if a_point not in self.points:
             raise Exception('There is no such point for this Triangle.')
