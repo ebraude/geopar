@@ -158,7 +158,9 @@ class Triangle:
 
     def set_angle_by_point(self, a_point, an_angle):
         # Precondition: a_point is in self.points
-        # Postcondition: an_angle is the element of self.angles corr. to a_point
+        # Postcondition: an_angle is the element of self.angles corresponding to a_point
+        # Example: self is 33[angle 50], 44[angle 60], 55[angle 70] and index_of_a_point[44] =  2
+        #          After set_angle_by_point(self, 44, an_angle), an_angle = self.angles[2]
         # Known issue: change to return the angle?
 
         if a_point not in self.points:
