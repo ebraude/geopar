@@ -61,7 +61,7 @@ class TriangulatedFigure:
         """
 
         list_of_points = []
-        triangles = self.triangles_with_point(a_point)
+        triangles = self.triangles_at(a_point)
         for triangle in triangles:
             angle = triangle.angle_of_point(a_point)
             if not angle.is_known():
@@ -116,38 +116,34 @@ class TriangulatedFigure:
     def get_interior_points(self):
         """
         Returns the list of interior points in self.
-
-        OBJECTIVES:
-         (Found 1a): found the points that have more than 2 triangles attached to them
-                     AND
-         (Found 1b): saved them in point_nums, alongside with number of triangles that they are in
-         (Found 2): found interior points
-         (Complement): returned interior_points
-
-
         """
 
-        # (Found 1a)
+        # -- (At least 2):
+        # point_nums is the list of all (p, n) where p is a vertex on n Triangles of self with n > 2
+
         all_points = self.get_points()
         point_nums = []
         for point in all_points:
-            n = len(self.triangles_with_point(point))
+            n = len(self.triangles_at(point))
             if n > 2:
-                # (Found 1b)
                 point_nums.append((point, n))
 
-        # (Found 2)
+        # -- The interior points, interior_points, returned
+
         interior_points = []
+
+        # (point, # of triangles around point)
         for point_num in point_nums:
+            # [points around point]
             points = []
             for triangle in self.get_triangles():
                 if triangle.has_point(point_num[0]):
                     points.extend(triangle.get_points())
 
+            # (# of points around point == # number of triangles around point + 1)
             if len(set(points)) == point_num[1] + 1:
                 interior_points.append(point_num[0])
 
-        # (Complement): all interior points found
         return interior_points
 
     def get_points(self):
@@ -184,7 +180,7 @@ class TriangulatedFigure:
         """
 
         count = 0
-        triangles = self.triangles_with_point(a_point)
+        triangles = self.triangles_at(a_point)
         for triangle in triangles:
             angle = triangle.angle_of_point(a_point)
             if not angle.is_known():
@@ -233,7 +229,7 @@ class TriangulatedFigure:
         """
 
         sum_angles = 0
-        triangles = self.triangles_with_point(a_point)
+        triangles = self.triangles_at(a_point)
         for triangle in triangles:
             angle = triangle.angle_of_point(a_point)
             if angle.is_known():
@@ -241,7 +237,7 @@ class TriangulatedFigure:
 
         return sum_angles
 
-    def triangles_with_point(self, a_point):
+    def triangles_at(self, a_point):
         """
         Returns the (contiguous) list of self.triangles containing a_point in clockwise order.
 
