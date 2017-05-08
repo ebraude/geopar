@@ -95,7 +95,7 @@ class TestTriangulatedFigure(unittest.TestCase):
 
         # how can we check the order of triangles?
 
-        triangles_ = self.tf1.triangles_with_point(4)
+        triangles_ = self.tf1.triangles_at(4)
         self.assertEqual(4, len(triangles_))  # 4 triangles around point 4
 
     def test_is_empty(self):
