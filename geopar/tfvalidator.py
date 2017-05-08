@@ -72,7 +72,7 @@ class TFValidator(object):
             i += 1
 
             # === 2 (Summed up)
-            triangles = a_tf.triangles_with_point(interior_point)
+            triangles = a_tf.triangles_at(interior_point)
             sum_angles = 0
             for triangle in triangles:
                 sum_angles += triangle.angle_of_point(interior_point)
@@ -103,7 +103,7 @@ class TFValidator(object):
 
         following, preceding = [], []
         for point in a_tf.get_interior_points():
-            for tri in a_tf.triangles_with_point(point):
+            for tri in a_tf.triangles_at(point):
                 following.append(tri.angle_of_point(tri.point_following(point)))
                 preceding.append(tri.angle_of_point(tri.point_preceding(point)))
 
