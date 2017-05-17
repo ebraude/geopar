@@ -59,7 +59,7 @@ class TFPreprocessor(object):
         for point in a_tf.get_interior_points():
 
             # triangles around interior point
-            triangles = a_tf.triangles_with_point(point)
+            triangles = a_tf.triangles_at(point)
 
             angle_following_list = []
             angle_preceding_list = []
