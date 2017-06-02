@@ -1,9 +1,9 @@
 import unittest
-from geopar.tfpreprocessor import TFPreprocessor
+from geopar.tf_elaborations_class import TF_Elaborations
 from geopar.triangulated_figure_class import TriangulatedFigure
 from geopar.triangle_class import Triangle
 from geopar.angle_class import Angle
-from geopar.tfvalidator import TFValidator
+from geopar.tf_validator import TF_Validator
 
 __author__ = 'satbek'
 
@@ -20,7 +20,7 @@ __author__ = 'satbek'
 class TestTFPreprocessor(unittest.TestCase):
 
     def setUp(self):
-        self.preprocessor = TFPreprocessor()
+        self.preprocessor = TF_Elaborations()
         self.tf_empty = TriangulatedFigure()
 
         # TriangulatedFigure tf1 consists of seven Triangles t1-t7
@@ -64,15 +64,15 @@ class TestTFPreprocessor(unittest.TestCase):
         self.tf3 = TriangulatedFigure([self.ttt1, self.ttt2, self.ttt3, self.ttt4, self.ttt5, self.ttt6, self.ttt7])
 
     def test_theorem_2(self):
-        validator = TFValidator()
-        if validator.rule_180(self.tf2):
+        validator = TF_Validator()
+        if validator.check_180_rule(self.tf2):
             print('180 ok')
-        if validator.rule_360(self.tf2):
+        if validator.check_360_rule(self.tf2):
             print('360 ok')
-        if validator.rule_pairing(self.tf2):
+        if validator.check_pairing(self.tf2):
             print('pairing ok')
 
-        preprocessor = TFPreprocessor()
+        preprocessor = TF_Elaborations()
         print('original:')
         print(self.tf2)
         self.tf2.set_angle_by_angle_points(6, 4, 5, Angle.from_str('x'))
@@ -80,17 +80,17 @@ class TestTFPreprocessor(unittest.TestCase):
         self.tf2.set_angle_by_angle_points(2, 6, 3, Angle.from_str('x'))
         print('edited:')
         print(self.tf2)
-        preprocessor.theorem_2(self.tf2)
+        preprocessor.apply_360_rule_to(self.tf2)
         print('corrected:')
         print(self.tf2)
 
         self.assertTrue(True)
 
     def test_theorem_3(self):
-        preprocessor = TFPreprocessor()
+        preprocessor = TF_Elaborations()
         print('original:')
         print(self.tf3)
-        preprocessor.theorem_3(self.tf3)
+        preprocessor.apply_pairing_to(self.tf3)
         print('after pairing:')
         print(self.tf3)
         pass

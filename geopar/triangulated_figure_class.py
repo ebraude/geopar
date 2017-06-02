@@ -70,7 +70,7 @@ class TriangulatedFigure:
 
         return list_of_points
 
-    def complete_unknown_angle_at(self, a_point):
+    def make_angles_known_at(self, a_point):
         """
         Computes an unknown angle at a point by using 360 degrees rule.
 
@@ -116,34 +116,38 @@ class TriangulatedFigure:
     def get_interior_points(self):
         """
         Returns the list of interior points in self.
+
+        OBJECTIVES:
+         (Found 1a): found the points that have more than 2 triangles attached to them
+                     AND
+         (Found 1b): saved them in point_nums, alongside with number of triangles that they are in
+         (Found 2): found interior points
+         (Complement): returned interior_points
+
+
         """
 
-        # -- (At least 2):
-        # point_nums is the list of all (p, n) where p is a vertex on n Triangles of self with n > 2
-
+        # (Found 1a)
         all_points = self.get_points()
         point_nums = []
         for point in all_points:
             n = len(self.triangles_at(point))
             if n > 2:
+                # (Found 1b)
                 point_nums.append((point, n))
 
-        # -- The interior points, interior_points, returned
-
+        # (Found 2)
         interior_points = []
-
-        # (point, # of triangles around point)
         for point_num in point_nums:
-            # [points around point]
             points = []
             for triangle in self.get_triangles():
                 if triangle.has_point(point_num[0]):
                     points.extend(triangle.get_points())
 
-            # (# of points around point == # number of triangles around point + 1)
             if len(set(points)) == point_num[1] + 1:
                 interior_points.append(point_num[0])
 
+        # (Complement): all interior points found
         return interior_points
 
     def get_points(self):
