@@ -51,7 +51,7 @@ class TFPreprocessor(object):
         """
 
         for point in a_tf.get_interior_points():
-            a_tf.complete_unknown_angle_at(point)
+            a_tf.make_angles_known_at(point)
 
     @staticmethod
     def theorem_3(a_tf):

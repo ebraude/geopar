@@ -1,37 +1,34 @@
 from geopar.triangulated_figure_class import TriangulatedFigure
 from geopar.triangle_class import Triangle
 from geopar.angle_class import Angle
-from geopar.tfvalidator import TFValidator
-from geopar.tfpreprocessor import TFPreprocessor
+from geopar.tf_validator import TF_Validator
+from geopar.tf_elaborations_class import TF_Elaborations
 
 """
-ISSUES:
-1. Does not check the input for correctness
+Known Issue: Does not check the input for correctness
 """
 
-__author__ = 'satbek'
+__author__ = 'satbek'  # edited by Eric Braude
 
 
-def parse_a_file(filename):
-    # (Opened): a file is opened
-    # AND number_of_triangles, figure instantiated
-    a_file = open('../inputs/' + filename)
+def parse_file(a_file):
+    '''
+    Returns return_figure = TriangulatedFigure with the specifications in a_file
+    '''
+    # --the_file represents a_file, opened for input
+    the_file = open('../inputs/' + a_file)
 
-    # first line contains the number_of_triangles to read and dimension of Angle
-    line = a_file.readline()
+    # --number_of_triangles assigned
+    line = the_file.readline()
     line = line.split()
     number_of_triangles = int(line[0])
-    dim = int(line[1])
 
-    # all read triangles will be added to figure
-    figure = TriangulatedFigure()
+    # --return_figure = TriangulatedFigure with the specifications in a_file
 
-    # (Parsed): parsing the input.txt
-
-    # 'point1, point2, point3; angle1, angle2, angle3'
+    return_figure = TriangulatedFigure()
     for i in range(number_of_triangles):
         # line = ['point1, point2, point3', 'angle1, angle2, angle3']
-        line = a_file.readline().split(';')
+        line = the_file.readline().split(';')
 
         # _points = [point1, point2, point3]
         _points = list(map(int, line[0].split(',')))
@@ -44,104 +41,106 @@ def parse_a_file(filename):
         a3 = Angle.from_str(angles_str[2])
 
         _angles = [a1, a2, a3]
-        figure.add(Triangle(_points, _angles))
+        return_figure.add(Triangle(_points, _angles))
 
-    return figure
+    return return_figure
 
 
-def run(figure):
+def run(a_tf):
+    '''
+    Postconditions:
+    1. (Completed before pairing): 180 and 360 rules produce no further angles on given a_tf
+    2. (All known?): EITHER NOT a_tf.all_angles_are_known() AND this did not return
+    OR AND UNIQUE ALL-ANGLE CONSEQUENCE OF THE PREMISES or INCONCLUSIVE  reported to user on console
+    3. (Queried): State of a_tf on console AND user was queried to attempt pairing
+    4. (No pairing): EITHER user replied "yes" AND user_input == 'y'
+        OR user replied "no" AND "1A. INCONCLUSIVE" and a_tf are on the console AND this returned
+    5. (Pairing): Pairing, 180 and 360 rules were performed until no new results AND result reported
+    6. Validity of a_tf is on the console
+    '''
 
-    validator = TFValidator()
-    preprocessor = TFPreprocessor()
+    # --1. (Completed before pairing)
 
-    # Apply 180 and 360 rules until no new angles deduced
-    state_before = figure.get_id()
-    preprocessor.theorem_1(figure)
-    preprocessor.theorem_2(figure)
-    state_after = figure.get_id()
+    old_a_tf_state, new_a_tf_state = 0, a_tf.get_id()  # before/after computing present state
+    preprocessor = TF_Elaborations()
+    while old_a_tf_state != new_a_tf_state:
+        old_a_tf_state = a_tf.get_id()
+        preprocessor.apply_180_rule_to(a_tf)
+        preprocessor.apply_360_rule_to(a_tf)
+        new_a_tf_state = a_tf.get_id()
 
-    while state_before != state_after:
-        state_before = figure.get_id()
-        preprocessor.theorem_1(figure)
-        preprocessor.theorem_2(figure)
-        state_after = figure.get_id()
+    # --2. (All angles?)
 
-    # All angles known?
-    if figure.all_angles_are_known():
+    validator = TF_Validator()
+    if a_tf.all_angles_are_known():
         # 180, 360, and pairing valid?
-        if validator.all_rules(figure):
+        if validator.run_all_rules(a_tf):
             print("Pre-process complete.")
             print("Here is your triangulated figure:")
-            print(figure)
+            print(a_tf)
             print("1B. UNIQUE ALL-ANGLE CONSEQUENCE OF THE PREMISES.")
-
         else:
             print("Pre-process complete.")
             print('INCONCLUSIVE (1)')
+        return
+
+    # --3. (Queried)
+
+    print('-------------------------')
+    print('Before pairing:')
+    print('-------------------------')
+    print(a_tf)
+    user_input = input('Do you want angle pairing to be applied? (y/n): ')
+    print()
+
+    # --4. (No)
+
+    if user_input == 'n':
+        print('-------------------------')
+        print("Pre-process complete.")
+        print('-------------------------')
+        print('1A. INCONCLUSIVE')
+        print("Here is your triangulated figure:")
+        print(a_tf)
+        return
+
+    # --5. (Yes)
+
+    # Apply pairing, 180, and 360 rules until no new angles deduced
+    old_a_tf_state, new_a_tf_state = 0, a_tf.get_id()  # before/after computing present state
+    preprocessor = TF_Elaborations()
+    while old_a_tf_state != new_a_tf_state:
+        old_a_tf_state = a_tf.get_id()
+        preprocessor.apply_pairing_to(a_tf)
+        preprocessor.apply_180_rule_to(a_tf)
+        preprocessor.apply_360_rule_to(a_tf)
+        new_a_tf_state = a_tf.get_id()
+
+    # All angles known; 180, 360, and pairing valid?
+    if a_tf.all_angles_are_known() and validator.run_all_rules(a_tf):
+        print('-------------------------')
+        print("Pre-process complete.")
+        print('-------------------------')
+        print("2. A CONSEQUENCE OF THE PREMISES.")
+        print("Here is your triangulated figure:")
+        print(a_tf)
     else:
-        # pairing wanted?
         print('-------------------------')
-        print('Before pairing:')
+        print("Pre-process complete.")
         print('-------------------------')
-        print(figure)
-        user_input = input('Do you want angle pairing to be applied? (y/n): ')
-        print()
+        print("INCONCLUSIVE (2)")
+        print("Here is your triangulated figure:")
+        print(a_tf)
 
-        if user_input == 'y':
-
-            # Apply pairing, 180, and 360 rules until no new angles deduced
-            state_before = figure.get_id()
-            preprocessor.theorem_3(figure)
-            preprocessor.theorem_1(figure)
-            preprocessor.theorem_2(figure)
-            state_after = figure.get_id()
-            while state_before != state_after:
-                state_before = figure.get_id()
-                preprocessor.theorem_3(figure)
-                preprocessor.theorem_1(figure)
-                preprocessor.theorem_2(figure)
-                state_after = figure.get_id()
-
-            # All angles known; 180, 360, and pairing valid?
-            if figure.all_angles_are_known() and validator.all_rules(figure):
-                print('-------------------------')
-                print("Pre-process complete.")
-                print('-------------------------')
-                print("2. A CONSEQUENCE OF THE PREMISES.")
-                print("Here is your triangulated figure:")
-                print(figure)
-            else:
-                print('-------------------------')
-                print("Pre-process complete.")
-                print('-------------------------')
-                print("INCONCLUSIVE (2)")
-                print("Here is your triangulated figure:")
-                print(figure)
-
-        elif user_input == 'n':
-            print('-------------------------')
-            print("Pre-process complete.")
-            print('-------------------------')
-            print('1A. INCONCLUSIVE')
-            print("Here is your triangulated figure:")
-            print(figure)
-
-        else:
-            print('-------------------------')
-            print("Pre-process incomplete.")
-            print('-------------------------')
-            print('BAD INPUT. RUN THE PROGRAM AGAIN. TYPE y OR n.')
 
 # "Pre-processing" stage
-triangulated_figure = parse_a_file('input.txt')
-
+triangulated_figure = parse_file('input.txt')
 
 print('-------------------------')
 print('Before pre-processing:')
 print('-------------------------')
 print("Here is your triangulated figure:")
 print(triangulated_figure)
-
 
 print('-------------------------')
 print('Pre-process is running...')

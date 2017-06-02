@@ -138,5 +138,5 @@ class TestTriangulatedFigure(unittest.TestCase):
 
     def test_complete_unknown_angle_at(self):
         self.tf1.set_angle_by_angle_points(1, 4, 3, Angle.from_str('x'))
-        self.tf1.complete_unknown_angle_at(4)
+        self.tf1.make_angles_known_at(4)
         self.assertEqual(self.tf1.get_angle_by_angle_points(1, 4, 3), 130)

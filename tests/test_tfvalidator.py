@@ -1,5 +1,5 @@
 import unittest
-from geopar.tfvalidator import TFValidator
+from geopar.tf_validator import TF_Validator
 from geopar.triangulated_figure_class import TriangulatedFigure
 from geopar.triangle_class import Triangle
 
@@ -15,7 +15,7 @@ __author__ = 'satbek'
 class TestTFValidator(unittest.TestCase):
 
     def setUp(self):
-        self.validator = TFValidator()
+        self.validator = TF_Validator()
         self.tf_empty = TriangulatedFigure()
 
         # TriangulatedFigure tf1 consists of seven Triangles t1-t7
@@ -42,13 +42,13 @@ class TestTFValidator(unittest.TestCase):
         self.tf_simple = TriangulatedFigure([self.t_simple])
 
     def test_rule_180(self):
-        self.assertTrue(self.validator.rule_180(self.tf1))
+        self.assertTrue(self.validator.check_180_rule(self.tf1))
 
     def test_rule_360(self):
-        self.assertTrue(self.validator.rule_360(self.tf1))
+        self.assertTrue(self.validator.check_360_rule(self.tf1))
 
     def test_rule_pairing(self):
-        self.assertTrue(self.validator.rule_pairing(self.tf1))
+        self.assertTrue(self.validator.check_pairing(self.tf1))
 
         with self.assertRaises(Exception):
-            self.validator.rule_180(self.tf_empty)
+            self.validator.check_180_rule(self.tf_empty)
