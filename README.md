@@ -2,9 +2,6 @@
 This project is an example of Computational Reasoning. It acts as a geometric theorems
 prover. More specifically, it is designed to prove Morley's Trisector Theorem (as of June, 2016).
 
-added by student
-added by professor
-
 #### To Run the Program
 Execute `run.py` script.
 
@@ -13,7 +10,7 @@ Execute `run.py` script.
 [Class Diagram](https://drive.google.com/open?id=0B13UVf6NnzqsUnRobzFkcldDR2c)
 
 #### Format of `input.txt`
-`input.txt` file serves as an input source for the project. It contains data about the vertices
+`input.txt` file serves as an input source for the project. It contains data about the vertices (points)
 and the angles of a triangulated figure.
 
 The first number `n` on the first line in `input.txt` denotes a number of triangles in the triangulated figure.
@@ -24,24 +21,30 @@ The program will process first `n+1` lines in `input.txt` and neglect the remain
 The points are written as 3 non-zero, distinct integer numbers in clockwise order separated by a comma.  
 _Example:_ `1, 3, 5`
 
-The angle is written as `m` integer/float values `a b c` separated by space, each of which is a coefficient
-of an angle of the form `aα + bβ + c`, where `α` and `β` are variables.
-The program is able to work with unknown angles. Unknown angles are written with a symbol `x`.  
-_Example:_ `-0.5 -1 1 60.0`, _for m = 4_ 
+The angle is written as a mathematical expression:
+it is a finite combination of linear terms, where a term is specified by a
+_coefficient_ and a _variable_: `aα + bβ + c` (`c` is a constant term).
 
-Please note that you need to provide `m` number of coefficients for each point (vertex),
-otherwise, the program will fail to run. 
+Coefficients can be of the form:
+1. 2, 3, 4 - integer number
+2. 2.5, 3.14 - floating point number
+3. 1/2, 3/4 - fraction number
+
+Terms can be of the form:
+1. α - greek letter
+2. a, b, c - latin letter
+3. \alpha, \beta - Latex style.
 
 One line contains information about one triangle: three points and three angles,
 where group of points is separated by a semicolon from a group of angles. 
 Please note that points and angles correspond to each other via their indices in the list.
 
 * This is an example of an information about triangle with all known angles for `m = 3`:  
-  `1, 3, 5; -1 -1 60, 0 1 0, 1 0 120`  
+  `1, 3, 5; -α - β + 60, β, α + 120`  
   Vertices: `1, 3, 5`  
   Angles: `-α - β + 60, β, α + 120`
 * This is an example of an information about triangle with one `unknown` angle:  
-  `1, 5, 4; -1 -1 60, 0 1 60, x`  
+  `1, 5, 4; -α - β + 60, β, x`
   Vertices: `1, 5, 4`  
   Angles: `-α - β + 60, β + 60, unknown`
 
@@ -64,14 +67,7 @@ Some triangulated figures come with constraints as demonstrated here: [link]
 (https://drive.google.com/open?id=1Co-chfuKsFyROpgChfybuGml94_yjnKcEUJ0IBFB54o)  
 Our program does not support constraints yet.
 
-#### Issues
-See:  
-- angle.py
-- triangle.py
-- triangulated_figure.py
-
 #### Conventions
-- Object attributes start with _ (underscore). G.e. _object_attribute
 - Triangle vertices are called triangle points (or simply, points), for convenience
 
 #### Terminology
