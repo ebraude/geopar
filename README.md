@@ -1,17 +1,17 @@
 #### Intent
-This project is an example of Computational Reasoning. It acts as a geometric theorems
-prover. More specifically, it is designed to prove Morley's Trisector Theorem (as of June, 2016).
+This project implements a type of computational reasoning. It postulats and proes various theorems
+in plane geometry. In partucular, it proves a new generalization of Morley's Trisector Theorem (as of June, 2016).
 
 #### To Run the Program
-Execute `run.py` script.
+(1) Specify the input in input.txt (see below for format)
+(2) Execute `run.py` script. GEOPAR may ask whether the user wants "pairing." This is explained in the paper.
 
 #### Functionality
 [Activity Diagram](https://drive.google.com/open?id=1NkYzuc2SvzuM0E-Suw00hTjIOd0kKMthwJZFddhUuCc)  
-[Class Diagram](https://drive.google.com/open?id=0B13UVf6NnzqsUnRobzFkcldDR2c)
+[Class Model](https://drive.google.com/open?id=0B13UVf6NnzqsUnRobzFkcldDR2c)
 
 #### Format of `input.txt`
-`input.txt` file serves as an input source for the project. It contains data about the vertices (points)
-and the angles of a triangulated figure.
+`input.txt` file serves as an input source for the project. It specifies the vertices (points) and the angles of a triangulated figure.
 
 The first number `n` on the first line in `input.txt` denotes a number of triangles in the triangulated figure.
 The second number `m` on the first line in `input.txt` denotes a dimension of the angles that constitute those triangles.
