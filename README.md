@@ -1,10 +1,10 @@
 #### Intent
-This project implements a type of computational reasoning. It postulats and proes various theorems
-in plane geometry. In partucular, it proves a new generalization of Morley's Trisector Theorem (as of June, 2016).
+This project implements a type of computational reasoning. It postulats and proves various theorems
+in plane geometry. In partucular, it can prove a new generalization of Morley's Trisector Theorem (as of June, 2016).
 
 #### To Run the Program
 (1) Specify the input in input.txt (see below for format)
-(2) Execute `run.py` script. GEOPAR may ask whether the user wants "pairing." This is explained in the paper.
+(2) Execute `run.py` script. GEOPAR may ask whether the user wants "pairing," to which the user usually agrees. This is explained in the paper.
 
 #### Functionality
 [Activity Diagram](https://drive.google.com/open?id=1NkYzuc2SvzuM0E-Suw00hTjIOd0kKMthwJZFddhUuCc)  
