@@ -1,12 +1,12 @@
 #### Intent
-This project implements a type of computational reasoning. It postulats and proves various theorems
-in plane geometry. In partucular, it can prove a new generalization of Morley's Trisector Theorem (as of June, 2016).
+This project implements a type of computational reasoning. It postulates and proves various theorems
+in plane geometry. In particular, it can prove a new generalization of Morley's Trisector Theorem (as of June, 2016).
 
 #### To Run the Program
 (1) Specify the input in input.txt (see below for format)
 (2) Execute `run.py` script. GEOPAR may ask whether the user wants "pairing," to which the user usually agrees. This is explained in the paper.
 
-#### Functionality
+#### Functionality (diagrams to be updated)
 [Activity Diagram](https://drive.google.com/open?id=1NkYzuc2SvzuM0E-Suw00hTjIOd0kKMthwJZFddhUuCc)  
 [Class Model](https://drive.google.com/open?id=0B13UVf6NnzqsUnRobzFkcldDR2c)
 
@@ -53,19 +53,7 @@ Thus, you may store all your configurations in `input.txt`, and move the one of 
 before running the program.
 
 #### Example Configurations
-Preparing an input file may be frustrating at the first time, because any missed detail will lead to
-improper program work.
-Below are some examples of triangle configurations with 3 variable angles:
-- Simple triangle that requires pairing (CLASSIC PYRAMID): [link]
-  (https://drive.google.com/open?id=1FBQ49obyUkgOncR4zO6KU7kQ88qRqlQWlRiMV95feHQ)
-- Morley triangle that requires pairing (MORLEY INCOMPLETE): [link]
-  (https://drive.google.com/open?id=172aspdJkZt9o6HyFKOKixCu8vuHe9FLwtaipAVcAuM4)
-- Generalized Morley triangle with all angles known (GENERALIZED MORLEY): [link]
-  (https://drive.google.com/open?id=1iNWpIilNH_K_C657zRd4lBOg7BdvI69nyTdTjkCqxfI)
-
-Some triangulated figures come with constraints as demonstrated here: [link]
-(https://drive.google.com/open?id=1Co-chfuKsFyROpgChfybuGml94_yjnKcEUJ0IBFB54o)  
-Our program does not support constraints yet.
+Examples of triangle configurations are collected in a separate section of this github site.
 
 #### Conventions
 - Triangle vertices are called triangle points (or simply, points), for convenience
